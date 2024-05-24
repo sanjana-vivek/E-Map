@@ -13,7 +13,9 @@ const UploadFilePage = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const mapContainer = useRef(null);
   const map = useRef(null);
-
+  const [lat, setLat] = useState('');
+  const [lng, setLng] = useState('');
+  const [markers, setMarkers] = useState([]);
 
   const handleFileChange = (event) => {
     setFiles(event.target.files);
@@ -49,6 +51,13 @@ const UploadFilePage = () => {
       zoom: 9, // starting zoom
     });
   }, []);
+
+  const addMarker = () => {
+    if(!map.current) return;
+    const marker = new mapboxgl.Marker().setLngLat([parseFloat(lat), parseFloat(lng)]).addTo(map.current);
+    setLat('');
+    setLng('');
+  };
 
   return (
     <section className="w-full flex-center flex-col">
@@ -93,6 +102,25 @@ const UploadFilePage = () => {
       </p>
       <br className="max-md:hidden" />
       <div ref={mapContainer} className='relative w-full h-[500px] mt-8'></div>
+      </section>
+      <section className="w-full flex-center flex-col">
+      <br className="max-md:hidden" />
+      <br className="max-md:hidden" />
+      <br className="max-md:hidden" />
+      <h1 className="head_text text-center text-4xl sm:text-5xl green_gradient">
+        Add custom markers to your map
+      </h1>
+      <br className="max-md:hidden" />
+      <p className="dec text-center">
+        Enter the lattitude and Longitude of you marker.
+      </p>
+      <br className="max-md:hidden" />
+      <br className="max-md:hidden" />
+      <div className='flex gap-2 mb-4'>
+        <input type='number' value={lat} onChange={(e) => setLat(e.target.value)} placeholder='Lattitude' className='p-2 border rounded'/>
+        <input type='number' value={lng} onChange={(e) => setLng(e.target.value)} placeholder='Longitude' className='p-2 border rounded'/>
+        <button onClick={addMarker} className='black_btn'>Add Marker</button>
+      </div>
       </section>
     </section>
   );
