@@ -15,12 +15,6 @@ export const runtime = 'nodejs'
 export const preferredRegion = 'auto'
 export const maxDuration = 5
  
-// Disable body parsing by Next.js
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 const uploadDir = path.join(process.cwd(), '/public/uploads');
 
