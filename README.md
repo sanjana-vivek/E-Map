@@ -28,7 +28,7 @@ git clone sanjana-vivek/E-Map
 Change your working directory to the cloned project directory: 
 
 ```bash
-cd <project_directory>
+cd e-map
 ```
 
 Install necessary dependencies: 
