@@ -40,11 +40,22 @@ Install necessary dependencies:
 install npm
 ```
 
-Configure environment variables:
+```bash
+install mapbox-gl
+```
 
 ```bash
-cp.env.example.env
+install formidable
 ```
+
+```bash
+install @tmcw/togeojson
+```
+
+```bash
+install axios
+```
+
 
 To run the development server:
 
