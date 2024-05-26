@@ -40,6 +40,7 @@ export async function POST(req, res) {
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
+      console.log(res.status);
       return res.status(500).json({ error: err.message });
     }
 
