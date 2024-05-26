@@ -22,7 +22,7 @@ I plan to include hover card information and drawing and editing shapes over the
 CLone the repository to your local machine using the following command:
 
 ```bash
-git clone <repository_url>
+git clone sanjana-vivek/E-Map
 ```
 
 Change your working directory to the cloned project directory: 
