@@ -1,10 +1,12 @@
 # E-Map
+
 E-map is a powerful tool which helps managing and visualising geospatial data, enabling you to upload, edit, and analyze geographical information with ease.  
 
 ![logo-no-background](https://github.com/sanjana-vivek/E-Map/assets/126575036/0fd01959-7063-45d0-b74c-86364fdc1bec)
 
 
 ## Features
+
 <ins>**User Management and Data Upload:**</ins>
 Users can sign in using their google account. Once signed in, an upload file button is visible for getting started with the application.
 There exists a feauture to upload GeoJSON/KML and TIFF files. 
@@ -66,9 +68,9 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. 
 
-Click on the latest release to view the site under production. 
 
 
 ## Deployed on Vercel
 
+Click on the latest release to view the site under production. 
 (Under active development)
