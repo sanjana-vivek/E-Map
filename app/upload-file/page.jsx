@@ -2,10 +2,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css'; // Import Mapbox CSS
 import Link from 'next/link';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
-
 
 const UploadFilePage = () => {
   const { data: session } = useSession();
@@ -22,7 +22,6 @@ const UploadFilePage = () => {
   };
 
   const handleUpload = async () => {
-
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
@@ -47,16 +46,20 @@ const UploadFilePage = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-74.5, 40], // starting position [lng, lat]
+      center: [12.5683, 55.6761], // starting position [lng, lat] for Copenhagen
       zoom: 9, // starting zoom
     });
   }, []);
 
   const addMarker = () => {
-    if(!map.current) return;
-    const marker = new mapboxgl.Marker().setLngLat([parseFloat(lat), parseFloat(lng)]).addTo(map.current);
+    if (!map.current) return;
+    const el = document.createElement('div');
+    el.className = 'marker';
+    new mapboxgl.Marker(el).setLngLat([parseFloat(lng), parseFloat(lat)]).addTo(map.current);
+    setMarkers((prevMarkers) => [...prevMarkers, { lat: parseFloat(lat), lng: parseFloat(lng) }]);
     setLat('');
     setLng('');
+    alert(`You have added your marker at latitude ${lat} and longitude ${lng}.`);
   };
 
   return (
@@ -68,7 +71,7 @@ const UploadFilePage = () => {
       </h1>
       <br className="max-md:hidden" />
       <p className="dec text-center">
-        Upload your GeoJSON, KML, and TIFF files to visualise them on the map.
+        Upload your GeoJSON, KML, and TIFF files to visualize them on the map.
       </p>
       <br className="max-md:hidden" />
       <input type="file" multiple onChange={handleFileChange} />
@@ -91,37 +94,62 @@ const UploadFilePage = () => {
         </div>
       )}
       <section className="w-full flex-center flex-col">
-      <br className="max-md:hidden" />
-      <br className="max-md:hidden" />
-      <h1 className="head_text text-center text-4xl sm:text-5xl green_gradient">
-        Map display leveraging Mapbox API
-      </h1>
-      <br className="max-md:hidden" />
-      <p className="dec text-center">
-        File you had uploaded visualised on the map.
-      </p>
-      <br className="max-md:hidden" />
-      <div ref={mapContainer} className='relative w-full h-[500px] mt-8'></div>
+        <br className="max-md:hidden" />
+        <br className="max-md:hidden" />
+        <h1 className="head_text text-center text-4xl sm:text-5xl green_gradient">
+          Map display leveraging Mapbox API
+        </h1>
+        <br className="max-md:hidden" />
+        <p className="dec text-center">
+          View the uploaded file visualized on the map.
+        </p>
+        <br className="max-md:hidden" />
+        <div ref={mapContainer} className="relative w-full h-[500px] mt-8"></div>
       </section>
       <section className="w-full flex-center flex-col">
-      <br className="max-md:hidden" />
-      <br className="max-md:hidden" />
-      <br className="max-md:hidden" />
-      <h1 className="head_text text-center text-4xl sm:text-5xl green_gradient">
-        Add custom markers to your map
-      </h1>
-      <br className="max-md:hidden" />
-      <p className="dec text-center">
-        Enter the lattitude and Longitude of you marker.
-      </p>
-      <br className="max-md:hidden" />
-      <br className="max-md:hidden" />
-      <div className='flex gap-2 mb-4'>
-        <input type='number' value={lat} onChange={(e) => setLat(e.target.value)} placeholder='Lattitude' className='p-2 border rounded'/>
-        <input type='number' value={lng} onChange={(e) => setLng(e.target.value)} placeholder='Longitude' className='p-2 border rounded'/>
-        <button onClick={addMarker} className='black_btn'>Add Marker</button>
-      </div>
+        <br className="max-md:hidden" />
+        <br className="max-md:hidden" />
+        <br className="max-md:hidden" />
+        <h1 className="head_text text-center text-4xl sm:text-5xl green_gradient">
+          Add custom markers to your map
+        </h1>
+        <br className="max-md:hidden" />
+        <p className="dec text-center">
+          Enter the latitude and longitude of your marker.
+        </p>
+        <br className="max-md:hidden" />
+        <br className="max-md:hidden" />
+        <div className="flex gap-2 mb-4">
+          <input
+            type="number"
+            value={lat}
+            onChange={(e) => setLat(e.target.value)}
+            placeholder="Latitude"
+            className="p-2 border rounded"
+            step="0.000001"
+          />
+          <input
+            type="number"
+            value={lng}
+            onChange={(e) => setLng(e.target.value)}
+            placeholder="Longitude"
+            className="p-2 border rounded"
+            step="0.000001"
+          />
+          <button onClick={addMarker} className="black_btn">
+            Add Marker
+          </button>
+        </div>
       </section>
+      <style jsx>{`
+        .marker {
+          background-color: red;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      `}</style>
     </section>
   );
 };

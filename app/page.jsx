@@ -20,13 +20,13 @@ const Home = () => {
       <br className="max-md:hidden" />
       <br className="max-md:hidden" />
       <br className="max-md:hidden" />
+      <br className="max-md:hidden" />
       <img
         src="./assets/images/logo-no-background.png"
         alt="e-map main logo"
         width={350}
         height={200}
       ></img>
-      <br className="max-md:hidden" />
       <br className="max-md:hidden" />
       <br className="max-md:hidden" />
       <br className="max-md:hidden" />
