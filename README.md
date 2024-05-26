@@ -20,7 +20,8 @@ Though there is a problem with file rendering over the map, I have tested this f
 
 I plan to include hover card information and drawing and editing shapes over the map once I fix my file upload bug.
 
-## Set-up and Running the Project
+
+## Set-up and Run the Project
 
 CLone the repository to your local machine using the following command:
 
