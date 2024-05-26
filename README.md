@@ -8,10 +8,10 @@ There exists a feauture to upload GeoJSON/KML and TIFF files.
 There is an error on rendering the uploaded file on a map. I'm working on fixing that. 
 I have learnt utilised Mapbox GL JS for this project.
 
-<ins>**Distance Measurement:**
+<ins>**Distance Measurement:**</ins>
 Users can measure distances over the map by providing the coordinates of 2 different locations. 
 
-<ins>**Point Marker Management:**
+<ins>**Point Marker Management:**</ins>
 Users can add custom markers to their map by providing the coordinates of the location where they wish to add a marker.
 Though there is a problem with file rendering over the map, I have tested this feature on a sample map provided by mapbox.
 
