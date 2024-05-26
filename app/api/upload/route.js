@@ -6,6 +6,15 @@ import { connectToDb } from '@utils/database';
 import File from '@models/file';
 import User from '@models/user';
 
+
+export const dynamic = 'auto'
+export const dynamicParams = true
+export const revalidate = false
+export const fetchCache = 'auto'
+export const runtime = 'nodejs'
+export const preferredRegion = 'auto'
+export const maxDuration = 5
+ 
 // Disable body parsing by Next.js
 export const config = {
   api: {
