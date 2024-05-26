@@ -37,23 +37,23 @@ cd e-map
 Install necessary dependencies: 
 
 ```bash
-install npm
+npm install npm
 ```
 
 ```bash
-install mapbox-gl
+npm install mapbox-gl
 ```
 
 ```bash
-install formidable
+npm install formidable
 ```
 
 ```bash
-install @tmcw/togeojson
+npm install @tmcw/togeojson
 ```
 
 ```bash
-install axios
+npm install axios
 ```
 
 
