@@ -72,5 +72,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deployed on Vercel
 
-Click on the latest release to view the site under production. 
+Click on the latest deployment to view the site under production. 
 (Under active development)
