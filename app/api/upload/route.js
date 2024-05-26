@@ -20,7 +20,7 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-export default async function handler(req, res) {
+export async function POST(req, res) {
   await connectToDb(); // Ensure the database is connected
   const session = await getSession({ req });
 
@@ -47,18 +47,20 @@ export default async function handler(req, res) {
     for (const key in files) {
       if (files.hasOwnProperty(key)) {
         const file = files[key];
-        const filePath = path.join('/uploads', file.newFilename);
+        const filePath = path.join('/uploads', file.name); // Changed file.newFilename to file.name
+        const fileType = path.extname(file.name).toLowerCase(); // Changed file.originalFilename to file.name
 
         // Save file metadata in MongoDB
         const newFile = new File({
-          filename: file.originalFilename,
+          filename: file.name, // Changed file.originalFilename to file.name
           path: filePath,
           uploadedBy: user._id,
+          fileType,
         });
 
         await newFile.save();
 
-        uploadedFiles.push(filePath);
+        uploadedFiles.push({ path: filePath, type: fileType });
       }
     }
 

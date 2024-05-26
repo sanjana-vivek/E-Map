@@ -4,6 +4,8 @@ import { useSession } from 'next-auth/react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css'; // Import Mapbox CSS
 import Link from 'next/link';
+import axios from 'axios';
+import {kml} from '@tmcw/togeojson'; // Import togeojson for KML conversion
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
@@ -27,29 +29,88 @@ const UploadFilePage = () => {
       formData.append('files', files[i]);
     }
 
-    const response = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      setUploadedFiles(result.files);
-      console.log('Files uploaded successfully:', result.files);
-    } else {
-      console.log('File upload failed');
+    try {
+      const response = await axios.post('/api/upload', formData);
+      if (response.status === 200) {
+        setUploadedFiles(response.data.files);
+        console.log('Files uploaded successfully:', response.data.files);
+        renderFilesOnMap(response.data.files);
+      } else {
+        console.log('File upload failed');
+      }
+    } catch (error) {
+      console.error('File upload error:', error);
     }
   };
 
-  useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [12.5683, 55.6761], // starting position [lng, lat] for Copenhagen
-      zoom: 9, // starting zoom
+  const renderFilesOnMap = (files) => {
+    if (!map.current) {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v11',
+        zoom: 9, // default zoom level
+      });
+    }
+
+    files.forEach((file) => {
+      const filePath = `${file.path}`;
+      const fileType = file.type;
+
+      if (fileType === '.geojson') {
+        map.current.addSource(`source-${filePath}`, {
+          type: 'geojson',
+          data: filePath,
+        });
+
+        map.current.addLayer({
+          id: `layer-${filePath}`,
+          type: 'line',
+          source: `source-${filePath}`,
+          layout: {},
+          paint: {
+            'line-color': '#888',
+            'line-width': 8,
+          },
+        });
+      } else if (fileType === '.kml') {
+        fetch(filePath)
+          .then(response => response.text())
+          .then(kmlText => {
+            const parser = new DOMParser();
+            const kml = parser.parseFromString(kmlText, 'application/xml');
+            const geojson = toGeoJSON.kml(kml);
+            map.current.addSource(`source-${filePath}`, {
+              type: 'geojson',
+              data: geojson,
+            });
+
+            map.current.addLayer({
+              id: `layer-${filePath}`,
+              type: 'line',
+              source: `source-${filePath}`,
+              layout: {},
+              paint: {
+                'line-color': '#888',
+                'line-width': 8,
+              },
+            });
+          });
+      } else if (fileType === '.tiff') {
+        map.current.addSource(`source-${filePath}`, {
+          type: 'raster',
+          url: filePath,
+          tileSize: 256,
+        });
+
+        map.current.addLayer({
+          id: `layer-${filePath}`,
+          type: 'raster',
+          source: `source-${filePath}`,
+          paint: {},
+        });
+      }
     });
-  }, []);
+  };
 
   const addMarker = () => {
     if (!map.current) return;
@@ -85,8 +146,8 @@ const UploadFilePage = () => {
           <ul>
             {uploadedFiles.map((file, index) => (
               <li key={index}>
-                <Link href={file} target="_blank">
-                  {file}
+                <Link href={file.path} target="_blank">
+                  {file.path}
                 </Link>
               </li>
             ))}
