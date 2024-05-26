@@ -2,7 +2,7 @@
 E-map is a powerful tool which helps managing and visualising geospatial data, enabling you to upload, edit, and analyze geographical information with ease.  
 
 ## Features
-<ins>**User Management and Data Upload:**
+<ins>**User Management and Data Upload:**</ins>
 Users can sign in using their google account. Once signed in, an upload file button is visible for getting started with the application.
 There exists a feauture to upload GeoJSON/KML and TIFF files. 
 There is an error on rendering the uploaded file on a map. I'm working on fixing that. 
