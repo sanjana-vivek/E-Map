@@ -1,6 +1,6 @@
 # E-Map
 E-map is a powerful tool which helps managing and visualising geospatial data, enabling you to upload, edit, and analyze geographical information with ease.  
-/Users/sanjana/Desktop/geospatial_app/e-map/public/assets/images/logo-no-background.png
+![logo-no-background](https://github.com/sanjana-vivek/E-Map/assets/126575036/0fd01959-7063-45d0-b74c-86364fdc1bec)
 
 ## Features
 <ins>**User Management and Data Upload:**</ins>
