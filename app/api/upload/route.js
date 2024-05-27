@@ -51,12 +51,12 @@ export async function POST(req, res) {
     for (const key in files) {
       if (files.hasOwnProperty(key)) {
         const file = files[key];
-        const filePath = path.join('/uploads', file.name); // Changed file.newFilename to file.name
-        const fileType = path.extname(file.name).toLowerCase(); // Changed file.originalFilename to file.name
+        const filePath = path.join('/uploads', file.name); 
+        const fileType = path.extname(file.name).toLowerCase(); 
 
         // Save file metadata in MongoDB
         const newFile = new File({
-          filename: file.name, // Changed file.originalFilename to file.name
+          filename: file.name,
           path: filePath,
           uploadedBy: user._id,
           fileType,
