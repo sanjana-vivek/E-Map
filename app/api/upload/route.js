@@ -16,7 +16,7 @@ export const preferredRegion = 'auto'
 export const maxDuration = 5
  
 
-const uploadDir = path.join(process.cwd(), '/public/uploads');
+const uploadDir = path.join(process.cwd(), '.');
 
 // Ensure the upload directory exists
 if (!fs.existsSync(uploadDir)) {
